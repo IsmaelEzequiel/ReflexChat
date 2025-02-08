@@ -1,0 +1,3 @@
+interface sessionState {
+  value: number
+}
