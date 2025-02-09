@@ -6,9 +6,7 @@ const initialState: sessionState = {
     user: null,
     session: null,
     message: null,
-  },
-  loading: false,
-  error: null
+  }
 }
 
 export const sessionSlice = createSlice({
@@ -31,7 +29,7 @@ export const sessionSlice = createSlice({
       .addMatcher(
         manageSession.endpoints.fetchCreateMessagePost.matchFulfilled,
         (state, { payload }) => {
-          state.data = payload.content
+          state.data.message = payload.content
         }
       )
   }

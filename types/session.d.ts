@@ -10,13 +10,8 @@ interface sessionState {
   data: {
     user?: User | null
     session?: Session | null
-    message?: {
-      userMessage: Message | null
-      botMessage: Message | null
-    } | null
+    message?: Message[] | null
   }
-  loading: boolean
-  error: ErrorResponse | null
 }
 
 interface ErrorResponse {

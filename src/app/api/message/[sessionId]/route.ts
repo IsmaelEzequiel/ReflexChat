@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Response, { params }: { params: Promise<{ sessionId: string }> }) {
+export async function GET(req: Request, { params }: { params: Promise<{ sessionId: string }> }) {
   const sessionId = (await params).sessionId
 
   try {
