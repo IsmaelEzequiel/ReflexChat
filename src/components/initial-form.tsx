@@ -7,11 +7,12 @@ import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
 
 interface InitialFormProps extends React.AllHTMLAttributes<HTMLDivElement> {
-  handleStartChartSubmit: () => void
+  loading: boolean
+  handleStartChartSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
 const InitialForm = React.forwardRef<HTMLDivElement, InitialFormProps>(
-  ({ className, handleStartChartSubmit, ...props }, ref) => {
+  ({ className, loading, handleStartChartSubmit, ...props }, ref) => {
     return (
       <div ref={ref} className={cn("flex flex-col gap-6", className)} {...props}>
         <form onSubmit={handleStartChartSubmit}>
@@ -35,13 +36,14 @@ const InitialForm = React.forwardRef<HTMLDivElement, InitialFormProps>(
                 <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
+                  name="name"
                   type="text"
                   placeholder="Ex: Maria da Silva"
                   required
                 />
               </div>
-              <Button type="submit" className="w-full" disabled>
-                <LoaderCircle className="animate-spin" />
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading && <LoaderCircle className="animate-spin" />}
                 Enter
               </Button>
             </div>
@@ -55,5 +57,6 @@ const InitialForm = React.forwardRef<HTMLDivElement, InitialFormProps>(
     )
   }
 )
+InitialForm.displayName = "InitialForm"
 
 export { InitialForm }

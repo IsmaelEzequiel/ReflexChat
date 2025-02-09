@@ -1,26 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import fetchUserAndSession from '../async-thunk/fetchUserAndSession'
 
 const initialState: sessionState = {
-  value: 0,
+  data: {
+    user: null,
+    session: null,
+    message: null,
+  },
+  loading: false,
+  error: null
 }
 
 export const sessionSlice = createSlice({
-  name: 'counter',
+  name: 'session',
   initialState,
-  reducers: {
-    increment: (state) => {
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserAndSession.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchUserAndSession.fulfilled, (state, action) => {
+        state.data = action.payload.content
+        state.loading = false
+      })
+      .addCase(fetchUserAndSession.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as ErrorResponse
+      })
+  }
 })
 
-export const { increment, decrement, incrementByAmount } = sessionSlice.actions
+export const {} = sessionSlice.actions
 
 export default sessionSlice.reducer
