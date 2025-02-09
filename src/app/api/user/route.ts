@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { userName } = await req.json();
 
     // ONLY TO SIMULATE A REAL REQUEST DELAY
-    await sleep(2000)
+    await sleep(1000)
 
     if (!userName) {
       return Response.json(

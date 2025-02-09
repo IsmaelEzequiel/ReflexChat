@@ -10,7 +10,10 @@ interface sessionState {
   data: {
     user?: User | null
     session?: Session | null
-    message?: Message | null
+    message?: {
+      userMessage: Message | null
+      botMessage: Message | null
+    } | null
   }
   loading: boolean
   error: ErrorResponse | null
@@ -37,10 +40,11 @@ interface Session {
 }
 
 interface Message {
-  id: string;
-  session: Session;
-  sessionId: string;
+  id?: string;
+  session?: Session;
+  sessionId?: string;
   author: MessageAuthor;
   content: string;
-  createdAt: Date;
+  createdAt?: Date;
+  optimisticUI?: boolean
 }

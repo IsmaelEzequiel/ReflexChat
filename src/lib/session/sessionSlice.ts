@@ -28,6 +28,12 @@ export const sessionSlice = createSlice({
           state.data = payload.content
         }
       )
+      .addMatcher(
+        manageSession.endpoints.fetchCreateMessagePost.matchFulfilled,
+        (state, { payload }) => {
+          state.data = payload.content
+        }
+      )
   }
 })
 
