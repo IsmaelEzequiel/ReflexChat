@@ -6,7 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowDown, LoaderCircle, Send } from "lucide-react";
 import { useFetchCreateMessagePostMutation, useGetMessageByIdQuery } from "@/lib/rtk-query/manageSession";
 import { useParams, useRouter } from "next/navigation";
-import { DateComponent } from "@/components/ui/date";
+import LoadingComponent from "@/components/ui/loading";
+import ChatBox from "@/components/ui/chat-box";
 
 const ChatPage = () => {
   const params = useParams()
@@ -76,30 +77,10 @@ const ChatPage = () => {
     <div className="flex items-center justify-center h-svh">
       <div className="flex rounded-xl bg-card text-card-foreground shadow-2xl w-full max-w-[900px] h-[90%] justify-end flex-col overflow-hidden">
         {isLoading
-          ? (
-            <div className="h-full w-full flex items-center justify-center flex-col gap-2">
-              <LoaderCircle className="animate-spin w-10 h-10" />
-              <span className="sr-only">Loading...</span>
-            </div>
-          ) : (
+          ? <LoadingComponent /> : (
             <>
               <ScrollArea onScrollCapture={handleScroll} ref={containerScrollRef} className="relative p-5 mr-1 scroll-smooth h-full">
-                <div className="space-y-4">
-                  {messages?.map((message: Message) => (
-                    message.author === 'BOT'
-                      ? (
-                        <div key={message.id} className="flex relative mb-6 w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm bg-muted">
-                          {message.content}
-                          <DateComponent position="LEFT" createdAt={message.createdAt} />
-                        </div>
-                      ) : (
-                        <div key={message.id} className="flex relative mb-4 w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ml-auto bg-primary text-primary-foreground">
-                          {message.content}
-                          <DateComponent position="RIGHT" createdAt={message.createdAt} />
-                        </div>
-                      )
-                  ))}
-                </div>
+                <ChatBox messages={messages} />
                 <div
                   onClick={handleScrollDownButton}
                   className={`${showScrollDownArrow ? 'opacity-100' : 'opacity-0'} absolute transition-opacity bottom-6 left-1/2 transform -translate-x-1/2 rounded-full p-1 dark:bg-background bg-neutral-200 cursor-pointer`}

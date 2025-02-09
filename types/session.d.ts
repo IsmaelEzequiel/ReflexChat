@@ -9,6 +9,7 @@ type ApiResponse<T = { [key: string]: T }> = {
 interface sessionState {
   data: {
     user?: User | null
+    users?: User[] | null
     session?: Session | null
     message?: Message[] | null
   }

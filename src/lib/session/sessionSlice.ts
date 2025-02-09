@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { manageSession } from '../rtk-query/manageSession'
+import { manageDashoard } from '../rtk-query/manageDashoard'
 
 const initialState: sessionState = {
   data: {
     user: null,
+    users: null,
     session: null,
     message: null,
   }
@@ -27,9 +29,9 @@ export const sessionSlice = createSlice({
         }
       )
       .addMatcher(
-        manageSession.endpoints.fetchCreateMessagePost.matchFulfilled,
+        manageDashoard.endpoints.findUserByName.matchFulfilled,
         (state, { payload }) => {
-          state.data.message = payload.content
+          state.data.users = payload.content
         }
       )
   }

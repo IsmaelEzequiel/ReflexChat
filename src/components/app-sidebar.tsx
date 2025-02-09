@@ -1,60 +1,52 @@
-import * as React from "react"
+import { ComponentProps } from "react"
 
-import { SearchForm } from "@/components/search-form"
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Button } from "./ui/button"
 
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "Installation",
-          url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
-      ],
-    },
-  ],
+interface AppSidebarProps {
+  users?: User[];
+  handleSelectChat: (id: string) => void
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { users } = props || {}
-
+export function AppSidebar({ users, handleSelectChat, ...props }: ComponentProps<typeof Sidebar> & AppSidebarProps) {
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <SearchForm />
-      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>List of users</SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            {users?.map((item) => (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild isActive={true}>
-                  <a href={item.name}>{item.name}</a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarGroupContent>
+          {users?.map((item) => (
+            <SidebarGroup key={item.name}>
+              <SidebarGroupLabel>{item.name}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {item.sessions.map((item, index) => (
+                    <SidebarMenuItem key={item.id}>
+                      <SidebarMenuButton asChild isActive={false}>
+                        <Button
+                          variant="link"
+                          className="justify-start"
+                          onClick={() => handleSelectChat(item.id)}
+                        >
+                          Chat #{index + 1}
+                        </Button>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          ))}
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />

@@ -1,9 +1,15 @@
 import prisma from "@/config/prisma";
 
-export async function GET() {
+export async function GET(req: Request, { params }: { params: Promise<{ name: string }> }) {
+  const name = (await params).name
+
   try {
     const users = await prisma.user.findMany({
-      include: { sessions: true },
+      where: {
+        name: {
+          search: name
+        }
+      }
     })
 
     return Response.json(
