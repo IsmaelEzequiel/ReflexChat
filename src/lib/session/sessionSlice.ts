@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import fetchUserAndSession from '../async-thunk/fetchUserAndSession'
+import { manageSession } from '../rtk-query/manageSession'
 
 const initialState: sessionState = {
   data: {
@@ -14,24 +14,23 @@ const initialState: sessionState = {
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
-  reducers: {},
+  reducers: {
+    resetSession: (state) => {
+      state = initialState
+      return state
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserAndSession.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
-      .addCase(fetchUserAndSession.fulfilled, (state, action) => {
-        state.data = action.payload.content
-        state.loading = false
-      })
-      .addCase(fetchUserAndSession.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload as ErrorResponse
-      })
+      .addMatcher(
+        manageSession.endpoints.fetchOrCreateUserPost.matchFulfilled,
+        (state, { payload }) => {
+          state.data = payload.content
+        }
+      )
   }
 })
 
-export const {} = sessionSlice.actions
+export const { resetSession } = sessionSlice.actions
 
 export default sessionSlice.reducer

@@ -5,47 +5,31 @@ import { useRouter } from "next/navigation";
 
 import { InitialForm } from "@/components/initial-form";
 import { withWrapper } from "@/components/wrapper";
-import { useToast } from "@/hooks/use-toast";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import fetchUserAndSession from "@/lib/async-thunk/fetchUserAndSession";
+import { useFetchOrCreateUserPostMutation } from "@/lib/rtk-query/manageSession";
 
-const Home = () => {
+const HomePage = () => {
   const router = useRouter()
-  const { toast } = useToast()
-  const dispatch = useAppDispatch()
-  const { data, loading, error } = useAppSelector((state) => state.session)
+  const [fetchOrCreateUserPost, { data, isLoading }] = useFetchOrCreateUserPostMutation()
 
   useEffect(() => {
-    if (error?.message) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.message,
-        variant: "destructive",
-      })
-    }
-  }, [toast, error?.message])
-
-  useEffect(() => {
-    if (data.session?.id) {
-      router.push(`/chat/${data.session.id}`)
-    }
-  }, [router, data.session?.id])
+    const { id } = data?.content.session || {}
+    if (id) router.push(`/chat/${id}`)
+  }, [router, data])
 
   const handleStartChartSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    const formData = new FormData(form)
+    const formData = new FormData(event.target as HTMLFormElement)
     const name = formData.get('name') as string
 
-    dispatch(fetchUserAndSession(name))
-  }, [dispatch])
+    fetchOrCreateUserPost(name)
+  }, [fetchOrCreateUserPost])
 
   return (
     <>
       <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
         <div className="w-full max-w-sm">
           <InitialForm
-            loading={loading}
+            loading={isLoading}
             handleStartChartSubmit={handleStartChartSubmit}
           />
         </div>
@@ -54,4 +38,4 @@ const Home = () => {
   );
 }
 
-export default withWrapper(Home)
+export default withWrapper(HomePage)
