@@ -4,15 +4,6 @@ export async function GET() {
   try {
     const users = await prisma.user.findMany({
       include: { sessions: true },
-      where: {
-        sessions: {
-          some: {
-            messages: {
-              some: {}
-            }
-          }
-        }
-      }
     })
 
     return Response.json(
