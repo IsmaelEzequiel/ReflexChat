@@ -2,8 +2,6 @@ name: Run Unit Tests
 
 on:
   push:
-    paths:
-      - prisma/migrations/**
     branches:
       - main
   pull_request:
