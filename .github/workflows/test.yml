@@ -28,5 +28,10 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Set environment variables 🔏
+        run: |
+          touch .env
+          echo DATABASE_URL_TEST=${{ secrets.DATABASE_URL_TEST }} >> .env
+
       - name: Run tests
         run: NODE_ENV=test npm run test
