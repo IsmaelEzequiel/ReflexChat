@@ -11,3 +11,10 @@ npx prisma migrate deploy
 # add component
 
 npx shadcn add button
+
+# FALTA
+
+README
+CYPRESS
+RESPONSIVO
+GITHUB ACTIONS
