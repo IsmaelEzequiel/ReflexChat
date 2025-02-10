@@ -121,6 +121,8 @@ npm run dev
 
 ### Unit & Integration Tests
 
+0. *I only added some integration tests on the API due the time, but for future implementations, I would add cypress too*
+
 1. Set up environment variables:
 
   - Copy `env.test.example` to `.env.test` and configure your database for test and base url.
