@@ -31,6 +31,7 @@ jobs:
       - name: Set environment variables 🔏
         run: |
           touch .env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo DATABASE_URL_TEST=${{ secrets.DATABASE_URL_TEST }} >> .env
 
       - name: Run tests
