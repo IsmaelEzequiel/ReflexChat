@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
 
@@ -19,6 +20,8 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar({ users, handleSelectChat, ...props }: ComponentProps<typeof Sidebar> & AppSidebarProps) {
+  const { isTablet, toggleSidebar } = useSidebar()
+
   return (
     <Sidebar {...props}>
       <SidebarContent>
@@ -36,7 +39,12 @@ export function AppSidebar({ users, handleSelectChat, ...props }: ComponentProps
                         <Button
                           variant="link"
                           className="justify-start"
-                          onClick={() => handleSelectChat(item.id)}
+                          onClick={() => {
+                            handleSelectChat(item.id)
+                            if (isTablet) {
+                              toggleSidebar()
+                            }
+                          }}
                         >
                           Chat #{index + 1}
                         </Button>

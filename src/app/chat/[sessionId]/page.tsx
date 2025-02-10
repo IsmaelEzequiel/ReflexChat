@@ -37,7 +37,14 @@ const ChatPage = () => {
         return [...updatedPrevState, ...botMessages]
       })
     }
-  }, [messageData])
+
+    // generated div from ScrollArea has table who break on responsive
+    const tableContainer = containerScrollRef.current?.children[1]?.firstChild as HTMLElement
+
+    if (tableContainer) {
+      tableContainer.style.display = 'block'
+    }
+  }, [containerScrollRef, messageData])
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const container = event.target as HTMLDivElement;
@@ -75,7 +82,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex items-center justify-center h-svh">
-      <div className="flex rounded-xl bg-card text-card-foreground shadow-2xl w-full max-w-[900px] h-[90%] justify-end flex-col overflow-hidden">
+      <div className="flex rounded-xl bg-card text-card-foreground shadow-2xl w-full max-w-[900px] h-[90%] justify-end flex-col overflow-hidden mx-2 lg:mx-0">
         {isLoading
           ? <LoadingComponent /> : (
             <>

@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -24,8 +24,18 @@ import { withWrapper } from "@/components/wrapper"
 import { useGetAllUsersQuery, useSelectCurrentConversationMutation } from "@/lib/rtk-query/manageDashoard"
 
 const DashboardPage = () => {
+  const containerScrollRef = useRef<HTMLDivElement | null>(null)
   const { data } = useGetAllUsersQuery(null)
-  const [selectCurrentConversation, { data: currentConversation, isLoading }] = useSelectCurrentConversationMutation()
+  const [selectCurrentConversation, { data: currentConversation, isLoading, isSuccess }] = useSelectCurrentConversationMutation()
+
+  useEffect(() => {
+    // generated div from ScrollArea has table who break on responsive
+    const tableContainer = document.querySelector('.space-y-4')?.parentElement as HTMLElement
+
+    if (tableContainer) {
+      tableContainer.style.display = 'block'
+    }
+  }, [isSuccess, containerScrollRef])
   
   const handleSelectChat = useCallback((id: string) => {
     selectCurrentConversation(id)
@@ -51,7 +61,7 @@ const DashboardPage = () => {
     }
 
     return (
-      <ScrollArea className="relative p-5 mr-1 scroll-smooth h-full">
+      <ScrollArea ref={containerScrollRef} className="relative p-5 mr-1 scroll-smooth h-full">
         <ChatBox messages={currentConversation?.content} />
       </ScrollArea>
     )
@@ -82,7 +92,7 @@ const DashboardPage = () => {
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="max-h-[90vh] flex-1 rounded-xl bg-muted/50">
+          <div className="max-h-[90vh] flex-1 rounded-xl bg-muted/50 max-w-full">
             {renderContent()}
           </div>
         </div>
