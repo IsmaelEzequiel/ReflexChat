@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Use secrets
-        run: echo "Setting up env variable"
-        env:
-          DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
+      - name: Set environment variables 🔏
+        run: |
+          touch .env
+          echo DATABASE_URL_TEST=${{ secrets.DATABASE_URL_TEST }} >> .env
 
       - name: Checkout code
         uses: actions/checkout@v2

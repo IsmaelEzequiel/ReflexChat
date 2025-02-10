@@ -6,10 +6,10 @@ jobs:
   cypress-run:
     runs-on: ubuntu-24.04
     steps:
-      - name: Use secrets
-        run: echo "Setting up env variable"
-        env:
-          DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
+      - name: Set environment variables 🔏
+        run: |
+          touch .env
+          echo DATABASE_URL_TEST=${{ secrets.DATABASE_URL_TEST }} >> .env
 
       - name: Checkout
         uses: actions/checkout@v4
