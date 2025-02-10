@@ -15,28 +15,10 @@ export const manageDashoard = createApi({
         }
       },
     }),
-    findUserByName: builder.mutation<ApiResponse<User[]>, string>({
-      query(name) {
-        return {
-          url: `api/dashboard/users/search/${name}`,
-          method: 'GET',
-        }
-      },
-    }),
-    fetchOrCreateUserPost: builder.mutation<ApiResponse<{ user: User, session: Session }>, string>({
-      query(userName) {
-        return {
-          url: 'api/user',
-          method: 'POST',
-          body: { userName },
-        }
-      }
-    })
   }),
 })
 
 export const {
   useGetAllUsersQuery,
-  useFindUserByNameMutation,
   useSelectCurrentConversationMutation,
 } = manageDashoard

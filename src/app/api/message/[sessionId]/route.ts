@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { content, sessionId, createdAt } = await req.json();
 
-    // await sleep(1000)
+    await sleep(1000)
 
     if (!content || !sessionId) {
       return Response.json(

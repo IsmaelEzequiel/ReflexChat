@@ -35,6 +35,28 @@ const DashboardPage = () => {
     return (!currentConversation?.content || currentConversation?.content.length === 0) && !isLoading
   }, [currentConversation?.content, isLoading])
 
+  const renderContent = () => {
+    if (isEmptyData) {
+      return (
+        isEmptyData && (
+          <div className="flex justify-center items-center h-full">
+            <Image src="/assets/empty_data.svg" width="300" height="300" alt="No conversation selected" />
+          </div>
+        )
+      )
+    }
+
+    if (isLoading) {
+      return <LoadingComponent />
+    }
+
+    return (
+      <ScrollArea className="relative p-5 mr-1 scroll-smooth h-full">
+        <ChatBox messages={currentConversation?.content} />
+      </ScrollArea>
+    )
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar
@@ -60,22 +82,8 @@ const DashboardPage = () => {
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="max-h-[68vh] flex-1 rounded-xl bg-muted/50">
-            <ScrollArea className="relative p-5 mr-1 scroll-smooth h-full">
-              {isEmptyData && (
-                <div className="flex justify-center items-center h-full">
-                  <Image src="/assets/empty_data.svg" width="300" height="300" alt="No conversation selected" />
-                </div>
-              )}
-              <div className="min-h-[500px] w-full flex items-center justify-center">
-                {isLoading ? <LoadingComponent /> : <ChatBox messages={currentConversation?.content} />}
-              </div>
-            </ScrollArea>
+          <div className="max-h-[90vh] flex-1 rounded-xl bg-muted/50">
+            {renderContent()}
           </div>
         </div>
       </SidebarInset>
