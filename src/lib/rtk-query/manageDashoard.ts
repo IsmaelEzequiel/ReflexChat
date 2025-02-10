@@ -5,12 +5,12 @@ export const manageDashoard = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
   endpoints: (builder) => ({
     getAllUsers: builder.query<ApiResponse<User[]>, null>({
-      query: () => `api/dashboard/users`,
+      query: () => `/api/dashboard/users`,
     }),
     selectCurrentConversation: builder.mutation<ApiResponse<Message[]>, string>({
       query(id) {
         return {
-          url: `api/dashboard/${id}`,
+          url: `/api/dashboard/${id}`,
           method: 'GET',
         }
       },

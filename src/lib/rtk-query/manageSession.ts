@@ -5,12 +5,12 @@ export const manageSession = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
   endpoints: (builder) => ({
     getMessageById: builder.query<ApiResponse<Message>, string>({
-      query: (sessionId) => `api/message/${sessionId}`,
+      query: (sessionId) => `/api/message/${sessionId}`,
     }),
     fetchCreateMessagePost: builder.mutation<ApiResponse<Message[]>, { content: string; sessionId: string, createdAt: Date }>({
       query(body) {
         return {
-          url: `api/message/${body.sessionId}`,
+          url: `/api/message/${body.sessionId}`,
           method: 'POST',
           body,
         }
@@ -19,7 +19,7 @@ export const manageSession = createApi({
     fetchOrCreateUserPost: builder.mutation<ApiResponse<{ user: User, session: Session }>, string>({
       query(userName) {
         return {
-          url: 'api/user',
+          url: '/api/user',
           method: 'POST',
           body: { userName },
         }
