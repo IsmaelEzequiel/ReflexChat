@@ -175,7 +175,7 @@ npx shadcn add button
    docker run -p 3000:3000 --env-file .env reflex_chat
    ```
 
-### Deploying on Railway
+### Deploying to prod
 
 Ensure that `DATABASE_URL` is correctly set in environment variables.
 Ensure that `NEXT_PUBLIC_BASE_URL` is correctly set in environment variables.
