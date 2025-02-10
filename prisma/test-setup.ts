@@ -3,15 +3,9 @@ import { PrismaClient } from "@prisma/client";
 import { beforeAll, afterAll } from "vitest";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env" });
+dotenv.config({ path: ".env.test" });
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL_TEST
-    }
-  }
-});
+const prisma = new PrismaClient();
 
 beforeAll(async () => {
   await prisma.$connect();

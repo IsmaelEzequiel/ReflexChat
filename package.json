@@ -10,11 +10,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "NODE_ENV=test vitest",
-    "test:watch": "NODE_ENV=test vitest --watch",
-    "cypress": "cypress run",
-    "cypress:open": "cypress open",
-    "cypress:run": "NODE_ENV=test start-server-and-test dev http://localhost:3000 cypress"
+    "test": "dotenv -e .env.test vitest",
+    "test:watch": "dotenv -e .env.test vitest --watch",
+    "cypress": "dotenv -e .env.test cypress run",
+    "cypress:open": "dotenv -e .env.test cypress open",
+    "cypress:run": "dotenv -e .env.test start-server-and-test dev http://localhost:3000 cypress"
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
@@ -54,6 +54,7 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^4.3.4",
     "cypress": "^14.0.2",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
