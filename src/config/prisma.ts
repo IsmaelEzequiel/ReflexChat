@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-let prisma = null
+let prisma = new PrismaClient();
 
 if (process.env.NODE_ENV === 'test') {
   prisma = new PrismaClient({
@@ -10,8 +10,6 @@ if (process.env.NODE_ENV === 'test') {
       }
     }
   });
-} else {
-  prisma = new PrismaClient();
 }
 
 export default prisma;
