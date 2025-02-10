@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Use secrets
+        env:
+          DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -25,4 +29,4 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: npm run test
+        run: NODE_ENV=test npm run test
