@@ -14,6 +14,7 @@ jobs:
 
     steps:
       - name: Use secrets
+        run: echo "Setting up env variable"
         env:
           DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
 
