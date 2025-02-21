@@ -37,7 +37,7 @@ const DashboardPage = () => {
     }
   }, [isSuccess, containerScrollRef])
   
-  const handleSelectChat = useCallback((id: string) => {
+  const handleSelectChat = useCallback((id?: string) => {
     selectCurrentConversation(id)
   }, [selectCurrentConversation])
 

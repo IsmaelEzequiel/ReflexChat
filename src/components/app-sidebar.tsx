@@ -16,7 +16,7 @@ import { Button } from "./ui/button"
 
 interface AppSidebarProps {
   users?: User[];
-  handleSelectChat: (id: string) => void
+  handleSelectChat: (id?: string) => void
 }
 
 export function AppSidebar({ users, handleSelectChat, ...props }: ComponentProps<typeof Sidebar> & AppSidebarProps) {
@@ -33,24 +33,29 @@ export function AppSidebar({ users, handleSelectChat, ...props }: ComponentProps
               <SidebarGroupLabel>{item.name}</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {item.sessions.map((item, index) => (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton asChild isActive={false}>
-                        <Button
-                          variant="link"
-                          className="justify-start"
-                          onClick={() => {
-                            handleSelectChat(item.id)
-                            if (isTablet) {
-                              toggleSidebar()
-                            }
-                          }}
-                        >
-                          Chat #{index + 1}
-                        </Button>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
+                  {item.sessions
+                    ? (
+                        item.sessions.map((item, index) => (
+                          <SidebarMenuItem key={item.id}>
+                            <SidebarMenuButton asChild isActive={false}>
+                              <Button
+                                variant="link"
+                                className="justify-start"
+                                onClick={() => {
+                                  handleSelectChat(item.id)
+                                  if (isTablet) {
+                                    toggleSidebar()
+                                  }
+                                }}
+                              >
+                                Chat #{index + 1}
+                              </Button>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        ))
+                      )
+                    : "Empty"
+                  }
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>

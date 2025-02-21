@@ -7,7 +7,7 @@ export const manageDashoard = createApi({
     getAllUsers: builder.query<ApiResponse<User[]>, null>({
       query: () => `/api/dashboard/users`,
     }),
-    selectCurrentConversation: builder.mutation<ApiResponse<Message[]>, string>({
+    selectCurrentConversation: builder.mutation<ApiResponse<Message[]>, string | undefined>({
       query(id) {
         return {
           url: `/api/dashboard/${id}`,
