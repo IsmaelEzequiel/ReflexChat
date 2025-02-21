@@ -10,6 +10,13 @@ export async function GET(req: Request, { params }: { params: Promise<{ sessionI
     const users = await prisma.message.findMany({
       where: {
         sessionId
+      },
+      include: {
+        session: {
+          include: {
+            user: true
+          }
+        }
       }
     })
 

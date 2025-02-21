@@ -21,18 +21,18 @@ interface ErrorResponse {
 }
 
 interface User {
-  id: string;
-  name: string;
-  sessions: Session[];
-  createdAt: Date;
+  id?: string;
+  name?: string;
+  sessions?: Session[];
+  createdAt?: Date;
 }
 
 interface Session {
-  id: string;
-  user: User;
-  userId: string;
-  messages: Message[];
-  createdAt: Date;
+  id?: string;
+  user?: User;
+  userId?: string;
+  messages?: Message[];
+  createdAt?: Date;
 }
 
 interface Message {

@@ -21,6 +21,13 @@ export async function POST(req: Request) {
         content,
         createdAt: createdAt,
         sessionId,
+      },
+      include: {
+        session: {
+          include: {
+            user: true
+          }
+        }
       }
     })
 
@@ -62,6 +69,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ sessionI
     const session = await prisma.session.findUnique({
       where: {
         id: sessionId
+      },
+      include: {
+        user: true,
+        messages: true
       }
     })
 
